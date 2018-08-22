@@ -42,7 +42,6 @@ namespace I2C_LCD1602 {
         set(d << 4)
     }
 
-
     /**
      * initial LCD, set I2C address. Address is 39/63 for PCF8574/PCF8574A
      * @param Addr is i2c address for LCD, eg: 39, 63
