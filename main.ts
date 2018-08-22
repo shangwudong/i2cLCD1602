@@ -15,22 +15,15 @@ namespace LANDZO_TS {
 
     let BASE_BOARD_I2C_ADDR = 0x30
     
-    /**
-     * 
-     * @param addr eeprom address, eg: 1
-     * @param dat is the data will be write, eg: 2
-     */
-    //% blockId="Landzo_WriteByte" block="test1 %dat"
-    //% weight=100 blockGap=8
-    export function write_byte(buf: number[]): void {
+    function write_byte(buf: number[]): void {
         pins.i2cWriteBuffer(BASE_BOARD_I2C_ADDR, buf)
     }
 
     /**
-     * 
+     * 从指定地址读取字节
      * @param addr eeprom address, eg: 1
      */
-    //% blockId="Landzo_ReadByte" block="test2"
+    //% blockId="Landzo_ReadByte" block="读取字节自地址"
     //% weight=99 blockGap=8
     export function read_byte(): number {
         return pins.i2cReadNumber(BASE_BOARD_I2C_ADDR, NumberFormat.UInt8BE);
