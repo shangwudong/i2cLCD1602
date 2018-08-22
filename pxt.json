@@ -1,5 +1,5 @@
 {
-    "name": "LandzoTianshu",
+    "name": "i2cLCD1602",
     "version": "0.0.1",
     "description": "makecode Landzo Tianshu package for micro:bit",
     "license": "MIT",
