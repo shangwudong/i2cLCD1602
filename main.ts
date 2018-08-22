@@ -81,13 +81,13 @@ namespace LANDZO_TS {
     //% blockId="SMG_Off" block="关闭数码管"
     //% weight=90 blockGap=8
     export function SMG_Off() :void {
-        write_byte(0x69);
+        write_byte0(0x69);
     }
     
     //% blockId="SMG" block="显示数码管 n %r"
     //% weight=90 blockGap=8
     export function SMG(num: number) :void {
-        write_byte2(0x70, number&0xff, number>>8);
+        write_byte2(0x70, num&0xff, num>>8);
     }
     
     export function General_IO1_Read_Analog() :number {
@@ -175,31 +175,31 @@ namespace LANDZO_TS {
     }
     
     export function DS18B20() :number {
-        write_byte(0x04);
+        write_byte0(0x04);
         return read_byte();
     }
     
     export function DHT11_temperature() :number {
-        write_byte1(0x05);
-        temp = read_byte();
+        write_byte0(0x05);
+        let temp = read_byte();
         return temp & 0xff;
     }
     
     export function DHT11_humidity() :number {
-        write_byte1(0x05);
-        humi = read_byte();
+        write_byte0(0x05);
+        let humi = read_byte();
         return humi >> 8;
     }
 
     export function Ultrasonic() :number {
-        write_byte1(0x55);
+        write_byte0(0x55);
         basic.pause(500)
         return read_byte();
     }
     
     export function BlackTraker_left() :number {
-        write_byte1(0x52);
-        left = read_byte();
+        write_byte0(0x52);
+        let left = read_byte();
         if (left & 0x01) {
             return 1;
         }
@@ -207,8 +207,8 @@ namespace LANDZO_TS {
     }
     
     export function BlackTraker_right() :number {
-        write_byte1(0x52);
-        right = read_byte();
+        write_byte0(0x52);
+        let right = read_byte();
         if (right & 0x02) {
             return 1;
         }
