@@ -18,18 +18,7 @@ namespace LANDZO_TS {
     function write_byte(buf: number[]): void {
         pins.i2cWriteBuffer(BASE_BOARD_I2C_ADDR, buf)
     }
-
-    /**
-     * 从指定地址读取字节
-     * @param addr eeprom address, eg: 1
-     */
-    //% blockId="Landzo_ReadByte" block="读取字节自地址"
-    //% weight=99 blockGap=8
-    export function read_byte(): number {
-        return pins.i2cReadNumber(BASE_BOARD_I2C_ADDR, NumberFormat.UInt8BE);
-    }
     
-
     // set LCD reg
     function setreg(d: number) {
         pins.i2cWriteNumber(i2cAddr, d, NumberFormat.Int8LE)
