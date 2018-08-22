@@ -8,10 +8,26 @@
  * Custom blocks
  */
 //% weight=100 color=#0fbc11 icon="▀"
-namespace I2C_LCD1602 {
+namespace LANDZO_TS {
     let i2cAddr: number // 0x3F: PCF8574A, 0x27: PCF8574
     let BK: number      // backlight control
     let RS: number      // command/data
+
+    let BASE_BOARD_I2C_ADDR = 0x30
+    export function write_byte(buf: number[]): void {
+        pins.i2cWriteBuffer(BASE_BOARD_I2C_ADDR, buf)
+    }
+
+    /**
+     * 从指定地址读取字节
+     * @param addr eeprom address, eg: 1
+     */
+    //% blockId="AT24_ReadByte" block="读取字节自地址 %addr"
+    //% weight=99 blockGap=8
+    export function read_byte(): number {
+        return pins.i2cReadNumber(BASE_BOARD_I2C_ADDR, NumberFormat.UInt8BE);
+    }
+    
 
     // set LCD reg
     function setreg(d: number) {
@@ -41,6 +57,7 @@ namespace I2C_LCD1602 {
         set(d)
         set(d << 4)
     }
+
 
     /**
      * initial LCD, set I2C address. Address is 39/63 for PCF8574/PCF8574A
