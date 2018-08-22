@@ -15,7 +15,7 @@ namespace LANDZO_TS {
 
     let BASE_BOARD_I2C_ADDR = 0x30
     
-    function write_byte(buf: number[]): void {
+    function write_byte(buf: Array<number>): void {
         pins.i2cWriteBuffer(BASE_BOARD_I2C_ADDR, buf)
     }
     
