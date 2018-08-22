@@ -23,6 +23,9 @@ to search box then search.
 
 ## API
 
+- TestFunc()  
+Test the add Function is work.  
+
 - LcdInit(Addr: number)  
 Initial LCD  
 Addr: I2C Address.  
