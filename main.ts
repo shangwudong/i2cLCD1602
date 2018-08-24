@@ -90,36 +90,50 @@ namespace LANDZO_TS {
         write_byte2(0x70, num&0xff, num>>8);
     }
     
+    //% blockId="General_IO1_Read_Analog" block="General_IO1_Read_Analog"
+    //% weight=50
     export function General_IO1_Read_Analog() :number {
         write_byte1(0x01, 0xb2);
         return read_byte();
     }
     
+    //% blockId="General_IO1_Read_Digital" block="General_IO1_Read_Digital"
+    //% weight=50
     export function General_IO1_Read_Digital() :number {
         write_byte1(0x02, 0xb2);
         return read_byte();
     }
     
+    //% blockId="General_IO2_Read_Analog" block="General_IO2_Read_Analog"
+    //% weight=50
     export function General_IO2_Read_Analog() :number {
         write_byte1(0x01, 0xb3);
         return read_byte();
     }
     
+    //% blockId="General_IO2_Read_Digital" block="General_IO2_Read_Digital"
+    //% weight=50
     export function General_IO2_Read_Digital() :number {
         write_byte1(0x02, 0xb3);
         return read_byte();
     }
     
+    //% blockId="P1_Read_Analog" block="P1_Read_Analog"
+    //% weight=50
     export function P1_Read_Analog() :number {
         write_byte1(0x01, 0xb0);
         return read_byte();
     }
     
+    //% blockId="P1_Read_Digital" block="P1_Read_Digital"
+    //% weight=50
     export function P1_Read_Digital() :number {
         write_byte1(0x02, 0xb0);
         return read_byte();
     }
     
+    //% blockId="P1_Write_Digital" block="P1_Write_Digital d %d"
+    //% weight=50
     export function P1_Write_Digital(value: number) :void {
         write_byte2(0x03, 0xb0, value);
     }
