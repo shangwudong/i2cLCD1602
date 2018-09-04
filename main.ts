@@ -7,7 +7,7 @@
 /**
  * Custom blocks
  */
-//% weight=100 color=#0fbc11 icon="▀"
+//% weight=100 color=#0fbc11 icon="L" block="天枢扩展模块"
 namespace LANDZO_TS {
     let i2cAddr: number // 0x3F: PCF8574A, 0x27: PCF8574
     let BK: number      // backlight control
@@ -138,79 +138,111 @@ namespace LANDZO_TS {
         write_byte2(0x03, 0xb0, value);
     }
     
+    //% blockId="P2_Read_Analog" block="P2_Read_Analog"
+    //% weight=50
     export function P2_Read_Analog() :number {
         write_byte1(0x01, 0xb1);
         return read_byte();
     }
     
+    //% blockId="P2_Read_Digital" block="P2_Read_Digital"
+    //% weight=50
     export function P2_Read_Digital() :number {
         write_byte1(0x02, 0xb1);
         return read_byte();
     }
     
+    //% blockId="P2_Write_Digital" block="P2_Write_Digital d %d"
+    //% weight=50
     export function P2_Write_Digital(value: number) :void {
         write_byte2(0x03, 0xb1, value);
     }
     
+    //% blockId="P3_Read_Digital" block="P3_Read_Digital"
+    //% weight=50
     export function P3_Read_Digital() :number {
         write_byte1(0x02, 0xc1);
         return read_byte();
     }
     
+    //% blockId="P3_Write_Digital" block="P3_Write_Digital d %d"
+    //% weight=50
     export function P3_Write_Digital(value: number) :void {
         write_byte2(0x03, 0xc1, value);
     }
     
+    //% blockId="P4_Read_Digital" block="P4_Read_Digital"
+    //% weight=50
     export function P4_Read_Digital() :number {
         write_byte1(0x02, 0xc2);
         return read_byte();
     }
     
+    //% blockId="P4_Write_Digital" block="P4_Write_Digital d %d"
+    //% weight=50
     export function P4_Write_Digital(value: number) :void {
         write_byte2(0x03, 0xc2, value);
     }
     
+    //% blockId="P5_Read_Digital" block="P5_Read_Digital"
+    //% weight=50
     export function P5_Read_Digital() :number {
         write_byte1(0x02, 0xc3);
         return read_byte();
     }
     
+    //% blockId="P5_Write_Digital" block="P5_Write_Digital d %d"
+    //% weight=50
     export function P5_Write_Digital(value: number) :void {
         write_byte2(0x03, 0xc3, value);
     }
     
+    //% blockId="P5_Read_Digital" block="P5_Read_Digital"
+    //% weight=50
     export function P6_Read_Digital() :number {
         write_byte1(0x02, 0xc4);
         return read_byte();
     }
     
+    //% blockId="P6_Write_Digital" block="P6_Write_Digital d %d"
+    //% weight=50
     export function P6_Write_Digital(value: number) :void {
         write_byte2(0x03, 0xc4, value);
     }
     
+    //% blockId="DS18B20_read" block="DS18B20_read"
+    //% weight=50
     export function DS18B20() :number {
         write_byte0(0x04);
         return read_byte();
     }
     
+    //% blockId="DHT11_read_temperature" block="DHT11_read_temperature"
+    //% weight=50
     export function DHT11_temperature() :number {
         write_byte0(0x05);
         let temp = read_byte();
         return temp & 0xff;
     }
     
+    //% blockId="DHT11_read_humidity" block="DHT11_read_humidity"
+    //% weight=50
     export function DHT11_humidity() :number {
         write_byte0(0x05);
         let humi = read_byte();
         return humi >> 8;
     }
 
+    //% blockId="Ultrasonic_read" block="Ultrasonic_read"
+    //% weight=50
     export function Ultrasonic() :number {
         write_byte0(0x55);
         basic.pause(500)
         return read_byte();
     }
     
+    //% blockId="BlackTraker_left" block="BlackTraker_left"
+    //% weight=50
     export function BlackTraker_left() :number {
         write_byte0(0x52);
         let left = read_byte();
@@ -220,6 +252,8 @@ namespace LANDZO_TS {
         return 0;
     }
     
+    //% blockId="BlackTraker_right" block="BlackTraker_right"
+    //% weight=50
     export function BlackTraker_right() :number {
         write_byte0(0x52);
         let right = read_byte();
@@ -227,171 +261,5 @@ namespace LANDZO_TS {
             return 1;
         }
         return 0;
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    // set LCD reg
-    function setreg(d: number) {
-        pins.i2cWriteNumber(i2cAddr, d, NumberFormat.Int8LE)
-        basic.pause(1)
-    }
-
-    // send data to I2C bus
-    function set(d: number) {
-        d = d & 0xF0
-        d = d + BK + RS
-        setreg(d)
-        setreg(d + 4)
-        setreg(d)
-    }
-
-    // send command
-    function cmd(d: number) {
-        RS = 0
-        set(d)
-        set(d << 4)
-    }
-
-    // send data
-    function dat(d: number) {
-        RS = 1
-        set(d)
-        set(d << 4)
-    }
-
-
-    /**
-     * initial LCD, set I2C address. Address is 39/63 for PCF8574/PCF8574A
-     * @param Addr is i2c address for LCD, eg: 39, 63
-     */
-    //% blockId="I2C_LCD1620_SET_ADDRESS" block="LCD initialize with Address %addr"
-    //% weight=100 blockGap=8
-    export function LcdInit(Addr: number) {
-        i2cAddr = Addr
-        BK = 8
-        RS = 0
-        cmd(0x33)       // set 4bit mode
-        basic.pause(5)
-        set(0x30)
-        basic.pause(5)
-        set(0x20)
-        basic.pause(5)
-        cmd(0x28)       // set mode
-        cmd(0x0C)
-        cmd(0x06)
-        cmd(0x01)       // clear
-    }
-
-    /**
-     * show a number in LCD at given position
-     * @param n is number will be show, eg: 10, 100, 200
-     * @param x is LCD column position, eg: 0
-     * @param y is LCD row position, eg: 0
-     */
-    //% blockId="I2C_LCD1620_SHOW_NUMBER" block="show number %n|at x %x|y %y"
-    //% weight=90 blockGap=8
-    //% x.min=0 x.max=15
-    //% y.min=0 y.max=1
-    export function ShowNumber(n: number, x: number, y: number): void {
-        let s = n.toString()
-        ShowString(s, x, y)
-    }
-
-    /**
-     * show a string in LCD at given position
-     * @param s is string will be show, eg: "Hello"
-     * @param x is LCD column position, [0 - 15], eg: 0
-     * @param y is LCD row position, [0 - 1], eg: 0
-     */
-    //% blockId="I2C_LCD1620_SHOW_STRING" block="show string %s|at x %x|y %y"
-    //% weight=90 blockGap=8
-    //% x.min=0 x.max=15
-    //% y.min=0 y.max=1
-    export function ShowString(s: string, x: number, y: number): void {
-        let a: number
-
-        if (y > 0)
-            a = 0xC0
-        else
-            a = 0x80
-        a += x
-        cmd(a)
-
-        for (let i = 0; i < s.length; i++) {
-            dat(s.charCodeAt(i))
-        }
-    }
-
-    /**
-     * turn on LCD
-     */
-    //% blockId="I2C_LCD1620_ON" block="turn on LCD"
-    //% weight=81 blockGap=8
-    export function on(): void {
-        cmd(0x0C)
-    }
-
-    /**
-     * turn off LCD
-     */
-    //% blockId="I2C_LCD1620_OFF" block="turn off LCD"
-    //% weight=80 blockGap=8
-    export function off(): void {
-        cmd(0x08)
-    }
-
-    /**
-     * clear all display content
-     */
-    //% blockId="I2C_LCD1620_CLEAR" block="clear LCD"
-    //% weight=85 blockGap=8
-    export function clear(): void {
-        cmd(0x01)
-    }
-
-    /**
-     * turn on LCD backlight
-     */
-    //% blockId="I2C_LCD1620_BACKLIGHT_ON" block="turn on backlight"
-    //% weight=71 blockGap=8
-    export function BacklightOn(): void {
-        BK = 8
-        cmd(0)
-    }
-
-    /**
-     * turn off LCD backlight
-     */
-    //% blockId="I2C_LCD1620_BACKLIGHT_OFF" block="turn off backlight"
-    //% weight=70 blockGap=8
-    export function BacklightOff(): void {
-        BK = 0
-        cmd(0)
-    }
-
-    /**
-     * shift left
-     */
-    //% blockId="I2C_LCD1620_SHL" block="Shift Left"
-    //% weight=61 blockGap=8
-    export function shl(): void {
-        cmd(0x18)
-    }
-
-    /**
-     * shift right
-     */
-    //% blockId="I2C_LCD1620_SHR" block="Shift Right"
-    //% weight=60 blockGap=8
-    export function shr(): void {
-        cmd(0x1C)
     }
 }
