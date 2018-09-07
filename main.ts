@@ -50,14 +50,14 @@ namespace LANDZO_TS {
     }
     
     
-    //% blockId="MAX7219_show_line" block="show line" icon="\uf00a"
+    //% blockId="MAX7219_show_line" block="MAX7219显示行 l %l|n %n" icon="\uf00a"
     //% weight=90 blockGap=8
     export function MAX7219_show_line(line: number, point: number): void {
         write_byte2(0x72, line, point);
     }
     
-    //% blockId="MAX7219_show" block="show line" icon="\uf00a"
-    //% weight=90 blockGap=8
+    //% blockId="MAX7219_show" block="MAX7219显示多行 l1 %l1|l2 %l2|l3 %l3|l4 %l4|l5 %l5|l6 %l6|l7 %l7|l8 %l8" icon="\uf00a"
+    //% weight=200 blockGap=8
     export function MAX7219_show(line1_dat: number, line2_dat: number, line3_dat: number, line4_dat: number, line5_dat: number, line6_dat: number, line7_dat: number, line8_dat: number): void {
         write_byte2(0x72, 1, line1_dat);
         write_byte2(0x72, 2, line2_dat)
@@ -69,7 +69,7 @@ namespace LANDZO_TS {
         write_byte2(0x72, 8, line8_dat)
     }
     
-    //% blockId="RGB" block="show RGB r %r|g %g|b %b"
+    //% blockId="RGB" block="RGB灯 r %r|g %g|b %b"
     //% weight=90 blockGap=8
     //% r.min=0 r.max=1
     //% g.min=0 g.max=1
@@ -90,134 +90,134 @@ namespace LANDZO_TS {
         write_byte2(0x70, num&0xff, num>>8);
     }
     
-    //% blockId="General_IO1_Read_Analog" block="General_IO1_Read_Analog"
+    //% blockId="General_IO1_Read_Analog" block="通用IO1读取模拟值"
     //% weight=50
     export function General_IO1_Read_Analog() :number {
         write_byte1(0x01, 0xb2);
         return read_byte();
     }
     
-    //% blockId="General_IO1_Read_Digital" block="General_IO1_Read_Digital"
+    //% blockId="General_IO1_Read_Digital" block="通用IO1读取数字值"
     //% weight=50
     export function General_IO1_Read_Digital() :number {
         write_byte1(0x02, 0xb2);
         return read_byte();
     }
     
-    //% blockId="General_IO2_Read_Analog" block="General_IO2_Read_Analog"
+    //% blockId="General_IO2_Read_Analog" block="通用IO2读取模拟值"
     //% weight=50
     export function General_IO2_Read_Analog() :number {
         write_byte1(0x01, 0xb3);
         return read_byte();
     }
     
-    //% blockId="General_IO2_Read_Digital" block="General_IO2_Read_Digital"
+    //% blockId="General_IO2_Read_Digital" block="通用IO12读取数字值"
     //% weight=50
     export function General_IO2_Read_Digital() :number {
         write_byte1(0x02, 0xb3);
         return read_byte();
     }
     
-    //% blockId="P1_Read_Analog" block="P1_Read_Analog"
+    //% blockId="P1_Read_Analog" block="P1读取模拟值"
     //% weight=50
     export function P1_Read_Analog() :number {
         write_byte1(0x01, 0xb0);
         return read_byte();
     }
     
-    //% blockId="P1_Read_Digital" block="P1_Read_Digital"
+    //% blockId="P1_Read_Digital" block="P1读取数字值"
     //% weight=50
     export function P1_Read_Digital() :number {
         write_byte1(0x02, 0xb0);
         return read_byte();
     }
     
-    //% blockId="P1_Write_Digital" block="P1_Write_Digital d %d"
+    //% blockId="P1_Write_Digital" block="P1数字值写 d %d"
     //% weight=50
     export function P1_Write_Digital(value: number) :void {
         write_byte2(0x03, 0xb0, value);
     }
     
-    //% blockId="P2_Read_Analog" block="P2_Read_Analog"
+    //% blockId="P2_Read_Analog" block="P2读取模拟值"
     //% weight=50
     export function P2_Read_Analog() :number {
         write_byte1(0x01, 0xb1);
         return read_byte();
     }
     
-    //% blockId="P2_Read_Digital" block="P2_Read_Digital"
+    //% blockId="P2_Read_Digital" block="P2读取数字值"
     //% weight=50
     export function P2_Read_Digital() :number {
         write_byte1(0x02, 0xb1);
         return read_byte();
     }
     
-    //% blockId="P2_Write_Digital" block="P2_Write_Digital d %d"
+    //% blockId="P2_Write_Digital" block="P2数字值写 d %d"
     //% weight=50
     export function P2_Write_Digital(value: number) :void {
         write_byte2(0x03, 0xb1, value);
     }
     
-    //% blockId="P3_Read_Digital" block="P3_Read_Digital"
+    //% blockId="P3_Read_Digital" block="P3读取数字值"
     //% weight=50
     export function P3_Read_Digital() :number {
         write_byte1(0x02, 0xc1);
         return read_byte();
     }
     
-    //% blockId="P3_Write_Digital" block="P3_Write_Digital d %d"
+    //% blockId="P3_Write_Digital" block="P3数字值写 d %d"
     //% weight=50
     export function P3_Write_Digital(value: number) :void {
         write_byte2(0x03, 0xc1, value);
     }
     
-    //% blockId="P4_Read_Digital" block="P4_Read_Digital"
+    //% blockId="P4_Read_Digital" block="P4读取数字值"
     //% weight=50
     export function P4_Read_Digital() :number {
         write_byte1(0x02, 0xc2);
         return read_byte();
     }
     
-    //% blockId="P4_Write_Digital" block="P4_Write_Digital d %d"
+    //% blockId="P4_Write_Digital" block="P4数字值写 d %d"
     //% weight=50
     export function P4_Write_Digital(value: number) :void {
         write_byte2(0x03, 0xc2, value);
     }
     
-    //% blockId="P5_Read_Digital" block="P5_Read_Digital"
+    //% blockId="P5_Read_Digital" block="P5读取数字值"
     //% weight=50
     export function P5_Read_Digital() :number {
         write_byte1(0x02, 0xc3);
         return read_byte();
     }
     
-    //% blockId="P5_Write_Digital" block="P5_Write_Digital d %d"
+    //% blockId="P5_Write_Digital" block="P5数字值写 d %d"
     //% weight=50
     export function P5_Write_Digital(value: number) :void {
         write_byte2(0x03, 0xc3, value);
     }
     
-    //% blockId="P5_Read_Digital" block="P5_Read_Digital"
+    //% blockId="P6_Read_Digital" block="P6读取数字值"
     //% weight=50
     export function P6_Read_Digital() :number {
         write_byte1(0x02, 0xc4);
         return read_byte();
     }
     
-    //% blockId="P6_Write_Digital" block="P6_Write_Digital d %d"
+    //% blockId="P6_Write_Digital" block="P6数字值写 d %d"
     //% weight=50
     export function P6_Write_Digital(value: number) :void {
         write_byte2(0x03, 0xc4, value);
     }
     
-    //% blockId="DS18B20_read" block="DS18B20_read"
+    //% blockId="DS18B20_read" block="DS18B20读取温度"
     //% weight=50
     export function DS18B20() :number {
         write_byte0(0x04);
         return read_byte();
     }
     
-    //% blockId="DHT11_read_temperature" block="DHT11_read_temperature"
+    //% blockId="DHT11_read_temperature" block="DHT11读取温度"
     //% weight=50
     export function DHT11_temperature() :number {
         write_byte0(0x05);
@@ -225,7 +225,7 @@ namespace LANDZO_TS {
         return temp & 0xff;
     }
     
-    //% blockId="DHT11_read_humidity" block="DHT11_read_humidity"
+    //% blockId="DHT11_read_humidity" block="DHT11读取湿度"
     //% weight=50
     export function DHT11_humidity() :number {
         write_byte0(0x05);
@@ -233,7 +233,7 @@ namespace LANDZO_TS {
         return humi >> 8;
     }
 
-    //% blockId="Ultrasonic_read" block="Ultrasonic_read"
+    //% blockId="Ultrasonic_read" block="超声波值"
     //% weight=50
     export function Ultrasonic() :number {
         write_byte0(0x55);
@@ -241,7 +241,7 @@ namespace LANDZO_TS {
         return read_byte();
     }
     
-    //% blockId="BlackTraker_left" block="BlackTraker_left"
+    //% blockId="BlackTraker_left" block="红外寻迹左"
     //% weight=50
     export function BlackTraker_left() :number {
         write_byte0(0x52);
@@ -252,7 +252,7 @@ namespace LANDZO_TS {
         return 0;
     }
     
-    //% blockId="BlackTraker_right" block="BlackTraker_right"
+    //% blockId="BlackTraker_right" block="红外寻迹右"
     //% weight=50
     export function BlackTraker_right() :number {
         write_byte0(0x52);
