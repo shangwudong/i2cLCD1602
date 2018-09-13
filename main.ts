@@ -60,13 +60,21 @@ namespace LANDZO_TS {
     //% weight=200 blockGap=8
     export function MAX7219_show(line1_dat: number, line2_dat: number, line3_dat: number, line4_dat: number, line5_dat: number, line6_dat: number, line7_dat: number, line8_dat: number): void {
         write_byte2(0x72, 1, line1_dat);
-        write_byte2(0x72, 2, line2_dat)
-        write_byte2(0x72, 3, line3_dat)
-        write_byte2(0x72, 4, line4_dat)
-        write_byte2(0x72, 5, line5_dat)
-        write_byte2(0x72, 6, line6_dat)
-        write_byte2(0x72, 7, line7_dat)
-        write_byte2(0x72, 8, line8_dat)
+        basic.pause(1);
+        write_byte2(0x72, 2, line2_dat);
+        basic.pause(1);
+        write_byte2(0x72, 3, line3_dat);
+        basic.pause(1);
+        write_byte2(0x72, 4, line4_dat);
+        basic.pause(1);
+        write_byte2(0x72, 5, line5_dat);
+        basic.pause(1);
+        write_byte2(0x72, 6, line6_dat);
+        basic.pause(1);
+        write_byte2(0x72, 7, line7_dat);
+        basic.pause(1);
+        write_byte2(0x72, 8, line8_dat);
+        basic.pause(1);
     }
     
     //% blockId="RGB" block="RGB灯 r %r|g %g|b %b"
