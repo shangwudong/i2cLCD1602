@@ -14,9 +14,21 @@ namespace LANDZO_TS {
     let RS: number      // command/data
 
     let BASE_BOARD_I2C_ADDR = 0x30
+    let JOY_BOARD_I2C_ADDR = 0x20
+    
+    function joy_read(cmd: number) :number {
+        let buf = pins.createBuffer(1);
+        buf[0] = cmd;
+        pins.i2cWriteBuffer(JOY_BOARD_I2C_ADDR, buf);
+        return pins.i2cReadNumber(JOY_BOARD_I2C_ADDR, NumberFormat.UInt8BE);
+    }
     
     function read_byte() :number {
         return pins.i2cReadNumber(BASE_BOARD_I2C_ADDR, NumberFormat.UInt8BE);
+    }
+    
+    function read_half_word() :number {
+        return pins.i2cReadNumber(BASE_BOARD_I2C_ADDR, NumberFormat.UInt16BE);
     }
     
     function write_byte0(cmd: number): void {
@@ -102,7 +114,7 @@ namespace LANDZO_TS {
     //% weight=50
     export function General_IO1_Read_Analog() :number {
         write_byte1(0x01, 0xb2);
-        return read_byte();
+        return read_half_word();
     }
     
     //% blockId="General_IO1_Read_Digital" block="通用IO1读取数字值"
@@ -116,7 +128,7 @@ namespace LANDZO_TS {
     //% weight=50
     export function General_IO2_Read_Analog() :number {
         write_byte1(0x01, 0xb3);
-        return read_byte();
+        return read_half_word();
     }
     
     //% blockId="General_IO2_Read_Digital" block="通用IO12读取数字值"
@@ -130,7 +142,7 @@ namespace LANDZO_TS {
     //% weight=50
     export function P1_Read_Analog() :number {
         write_byte1(0x01, 0xb0);
-        return read_byte();
+        return read_half_word();
     }
     
     //% blockId="P1_Read_Digital" block="P1读取数字值"
@@ -150,7 +162,7 @@ namespace LANDZO_TS {
     //% weight=50
     export function P2_Read_Analog() :number {
         write_byte1(0x01, 0xb1);
-        return read_byte();
+        return read_half_word();
     }
     
     //% blockId="P2_Read_Digital" block="P2读取数字值"
@@ -222,14 +234,14 @@ namespace LANDZO_TS {
     //% weight=50
     export function DS18B20() :number {
         write_byte0(0x04);
-        return read_byte();
+        return read_half_word();
     }
     
     //% blockId="DHT11_read_temperature" block="DHT11读取温度"
     //% weight=50
     export function DHT11_temperature() :number {
         write_byte0(0x05);
-        let temp = read_byte();
+        let temp = read_half_word();
         return temp & 0xff;
     }
     
@@ -237,7 +249,7 @@ namespace LANDZO_TS {
     //% weight=50
     export function DHT11_humidity() :number {
         write_byte0(0x05);
-        let humi = read_byte();
+        let humi = read_half_word();
         return humi >> 8;
     }
 
