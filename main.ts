@@ -300,7 +300,9 @@ namespace LANDZO_TS {
         return 0;
     }
     
-    export function Key_get(key: Keys) :number {
+    //% blockId="Key_read" block="读取按键%key状态"
+    //% weight=50
+    export function Key_read(key: Keys) :number {
         return joy_read(key);
     }
 }
