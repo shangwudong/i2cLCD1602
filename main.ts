@@ -13,8 +13,25 @@ namespace LANDZO_TS {
     let BK: number      // backlight control
     let RS: number      // command/data
 
-    let BASE_BOARD_I2C_ADDR = 0x30
-    let JOY_BOARD_I2C_ADDR = 0x20
+    const BASE_BOARD_I2C_ADDR = 0x30
+    const JOY_BOARD_I2C_ADDR = 0x20
+    
+    export enum Keys {
+        K1 = 0x01,
+        K2 = 0x02,
+        K3 = 0x03,
+        K4 = 0x04,
+        K5 = 0x05,
+        K6 = 0x06,
+        K7 = 0x07,
+        K8 = 0x08,
+        Joystick1_key = 0x09,
+        Joystick2_key = 0x0A,
+        Joystick1_x = 0x0B,
+        Joystick1_y = 0x0C,
+        Joystick2_x = 0x0D,
+        Joystick2_y = 0x0E,
+    }
     
     function joy_read(cmd: number) :number {
         let buf = pins.createBuffer(1);
@@ -281,5 +298,9 @@ namespace LANDZO_TS {
             return 1;
         }
         return 0;
+    }
+    
+    export function Key_get(key: Keys) :number {
+        return joy_read(key);
     }
 }
