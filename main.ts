@@ -4,6 +4,11 @@
  * http://www.micropython.org.cn
  */
 
+enum POINT {
+    O = 0,
+    X = 1,
+} 
+    
 /**
  * Custom blocks
  */
@@ -69,11 +74,6 @@ namespace LANDZO_TS {
         L6 = 5,
         L7 = 6,
         L8 = 7,
-    } 
-    
-    export enum POINT {
-        O = 0,
-        X = 1,
     } 
     
     function joy_read(cmd: number) :number {
