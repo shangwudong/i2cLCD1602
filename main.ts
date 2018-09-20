@@ -18,6 +18,15 @@ namespace LANDZO_TS {
     let BK: number      // backlight control
     let RS: number      // command/data
 
+    let max7219_row1: number = 0;
+    let max7219_row2: number = 0;
+    let max7219_row3: number = 0;
+    let max7219_row4: number = 0;
+    let max7219_row5: number = 0;
+    let max7219_row6: number = 0;
+    let max7219_row7: number = 0;
+    let max7219_row8: number = 0;
+    
     const BASE_BOARD_I2C_ADDR = 0x30
     const JOY_BOARD_I2C_ADDR = 0x20
     
@@ -66,14 +75,30 @@ namespace LANDZO_TS {
     }  
     
     export enum COLUMN {
-        L1 = 0,
-        L2 = 1,
-        L3 = 2,
-        L4 = 3,
-        L5 = 4,
-        L6 = 5,
-        L7 = 6,
-        L8 = 7,
+        C1 = 1,
+        C2 = 2,
+        C3 = 3,
+        C4 = 4,
+        C5 = 5,
+        C6 = 6,
+        C7 = 7,
+        C8 = 8,
+    } 
+    
+    export enum ROW {
+        R1 = 1,
+        R2 = 2,
+        R3 = 3,
+        R4 = 4,
+        R5 = 5,
+        R6 = 6,
+        R7 = 7,
+        R8 = 8,
+    } 
+    
+    export enum STATE {
+        SET = 0,
+        RESET = 1,
     } 
     
     function joy_read(cmd: number) :number {
@@ -121,20 +146,97 @@ namespace LANDZO_TS {
         pins.i2cWriteBuffer(BASE_BOARD_I2C_ADDR, buf)
     }
     
-    //% blockId="MAX7219_show_line" block="MAX7219显示行 |%l|%pnt1|%pnt2|%pnt3|%pnt4|%pnt5|%pnt6|%pnt7|%pnt8|"
+    //% blockId="MAX7219_show_point" block="点阵屏显示 |行 %r|列 %l|状态 %s|"
     //% weight=30 blockGap=80
-    export function MAX7219_show_line(line: COLUMN, pnt1: POINT,pnt2: POINT,pnt3: POINT,pnt4: POINT,pnt5: POINT,pnt6: POINT,pnt7: POINT,pnt8: POINT): void {
+    export function MAX7219_show_point(row: ROW, column: COLUMN, state: STATE): void {
+        //max7219_set_point(row, column, state)
+        let temp_row: number = 0;
+        
+        switch (row) {
+            case C1: {
+                temp_row = max7219_row1;
+                if (state == 1) {
+                    max7219_row1 |= (1 << (8-column));
+                } else {
+                    max7219_row1 &= ~(1 << (8-column));
+                }
+            }break;
+            case C2: {  
+                temp_row = max7219_row2;
+                if (state == 1) {
+                    max7219_row2 |= (1 << (8-column));
+                } else {
+                    max7219_row2 &= ~(1 << (8-column));
+                }
+            }break;
+            case C3: {
+                temp_row = max7219_row3;
+                if (state == 1) {
+                    max7219_row3 |= (1 << (8-column));
+                } else {
+                    max7219_row3 &= ~(1 << (8-column));
+                }
+            }break;
+            case C4: {
+                temp_row = max7219_row4;
+                if (state == 1) {
+                    max7219_row4 |= (1 << (8-column));
+                } else {
+                    max7219_row4 &= ~(1 << (8-column));
+                }
+            }break;
+            case C5: {
+                temp_row = max7219_row5;
+                if (state == 1) {
+                    max7219_row5 |= (1 << (8-column));
+                } else {
+                    max7219_row5 &= ~(1 << (8-column));
+                }
+            }break
+            case C6: {
+                temp_row = max7219_row6;
+                if (state == 1) {
+                    max7219_row6 |= (1 << (8-column));
+                } else {
+                    max7219_row6 &= ~(1 << (8-column));
+                }
+            }break;
+            case C7: {
+                temp_row = max7219_row7;
+                if (state == 1) {
+                    max7219_row7 |= (1 << (8-column));
+                } else {
+                    max7219_row7 &= ~(1 << (8-column));
+                }
+            }break;
+            case C8: {
+                temp_row = max7219_row8;
+                if (state == 1) {
+                    max7219_row8 |= (1 << (8-column));
+                } else {
+                    max7219_row8 &= ~(1 << (8-column));
+                }
+            }break;
+        }
+        write_byte2(0x72, row, temp_row);
+    }
+    /*
+    //% blockId="MAX7219_show_line" block="点阵屏显示行 |%l|%pnt1|%pnt2|%pnt3|%pnt4|%pnt5|%pnt6|%pnt7|%pnt8|"
+    //% weight=30 blockGap=80
+    export function MAX7219_show_line(line: ROW, pnt1: POINT,pnt2: POINT,pnt3: POINT,pnt4: POINT,pnt5: POINT,pnt6: POINT,pnt7: POINT,pnt8: POINT): void {
         let point = pnt1<<7 + pnt2<<6 + pnt3<<5 + pnt4<<4 + pnt5<<3 + pnt6<<2 + pnt7<<1 + pnt8;
         write_byte2(0x72, line, point);
     }
+    */
     /*
-    //% blockId="MAX7219_show_line" block="MAX7219显示行 l %l|n %n" icon="\uf00a"
+    //% blockId="MAX7219_show_line" block="点阵屏显示行 l %l|n %n" icon="\uf00a"
     //% weight=90 blockGap=8
     export function MAX7219_show_line(line: number, point: number): void {
         write_byte2(0x72, line, point);
     }
     */
-    //% blockId="MAX7219_show" block="MAX7219显示多行 l1 %l1|l2 %l2|l3 %l3|l4 %l4|l5 %l5|l6 %l6|l7 %l7|l8 %l8" icon="\uf00a"
+    /*
+    //% blockId="MAX7219_show" block="点阵屏显示多行 l1 %l1|l2 %l2|l3 %l3|l4 %l4|l5 %l5|l6 %l6|l7 %l7|l8 %l8" icon="\uf00a"
     //% weight=200 blockGap=8
     export function MAX7219_show(line1_dat: number, line2_dat: number, line3_dat: number, line4_dat: number, line5_dat: number, line6_dat: number, line7_dat: number, line8_dat: number): void {
         write_byte2(0x72, 1, line1_dat);
@@ -154,7 +256,7 @@ namespace LANDZO_TS {
         write_byte2(0x72, 8, line8_dat);
         basic.pause(1);
     }
-    
+    */
     //% blockId="RGB" block="RGB灯 |红%r|绿%g|蓝%b"
     //% weight=90 blockGap=8
     //% r.min=0 r.max=1
@@ -320,14 +422,14 @@ namespace LANDZO_TS {
     
     
     
-    //% blockId="DS18B20_read" block="DS18B20读取温度"
+    //% blockId="DS18B20_read" block="温度传感器温度数值"
     //% weight=50
     export function DS18B20() :number {
         write_byte0(0x04);
         return read_half_word();
     }
     
-    //% blockId="DHT11_read_temperature" block="DHT11读取温度"
+    //% blockId="DHT11_read_temperature" block="温湿度传感器温度数值"
     //% weight=50
     export function DHT11_temperature() :number {
         write_byte0(0x05);
@@ -335,7 +437,7 @@ namespace LANDZO_TS {
         return temp & 0xff;
     }
     
-    //% blockId="DHT11_read_humidity" block="DHT11读取湿度"
+    //% blockId="DHT11_read_humidity" block="温湿度传感器湿度数值"
     //% weight=50
     export function DHT11_humidity() :number {
         write_byte0(0x05);
@@ -343,7 +445,7 @@ namespace LANDZO_TS {
         return humi >> 8;
     }
 
-    //% blockId="Ultrasonic_read" block="超声波值"
+    //% blockId="Ultrasonic_read" block="超声波距离值"
     //% weight=50
     export function Ultrasonic() :number {
         write_byte0(0x55);
