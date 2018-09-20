@@ -72,8 +72,8 @@ namespace LANDZO_TS {
     } 
     
     export enum POINT {
-        X = 0,
-        O = 1,
+        O = 0,
+        X = 1,
     } 
     
     function joy_read(cmd: number) :number {
@@ -122,7 +122,7 @@ namespace LANDZO_TS {
     }
     
     //% blockId="MAX7219_show_line" block="MAX7219显示行 %l %pnt1 %pnt2 %pnt3 %pnt4 %pnt5 %pnt6 %pnt7 %pnt8" icon="\uf00a"
-    //% weight=190 blockGap=8
+    //% weight=190 blockGap=80
     export function MAX7219_show_line(line: COLUMN, pnt1: POINT,pnt2: POINT,pnt3: POINT,pnt4: POINT,pnt5: POINT,pnt6: POINT,pnt7: POINT,pnt8: POINT): void {
         let point = pnt1<<7 + pnt2<<6 + pnt3<<5 + pnt4<<4 + pnt5<<3 + pnt6<<2 + pnt7<<1 + pnt8;
         write_byte2(0x72, line, point);
