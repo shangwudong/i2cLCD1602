@@ -122,7 +122,7 @@ namespace LANDZO_TS {
     }
     
     //% blockId="MAX7219_show_line" block="MAX7219显示行 |%l|%pnt1|%pnt2|%pnt3|%pnt4|%pnt5|%pnt6|%pnt7|%pnt8|"
-    //% weight=190 blockGap=50
+    //% weight=30 blockGap=8
     export function MAX7219_show_line(line: COLUMN, pnt1: POINT,pnt2: POINT,pnt3: POINT,pnt4: POINT,pnt5: POINT,pnt6: POINT,pnt7: POINT,pnt8: POINT): void {
         let point = pnt1<<7 + pnt2<<6 + pnt3<<5 + pnt4<<4 + pnt5<<3 + pnt6<<2 + pnt7<<1 + pnt8;
         write_byte2(0x72, line, point);
@@ -155,7 +155,7 @@ namespace LANDZO_TS {
         basic.pause(1);
     }
     
-    //% blockId="RGB" block="RGB灯 r %r|g %g|b %b"
+    //% blockId="RGB" block="RGB灯 |红%r|绿%g|蓝%b"
     //% weight=90 blockGap=8
     //% r.min=0 r.max=1
     //% g.min=0 g.max=1
@@ -176,21 +176,21 @@ namespace LANDZO_TS {
         write_byte2(0x70, num&0xff, num>>8);
     }
     
-    //% blockId="GPIO_Read_Analog" block="|%io|读取模拟值"
+    //% blockId="GPIO_Read_Analog" block="|%io|端口模拟值"
     //% weight=50
     export function GPIO_Read_Analog(io: IO_ANALOG_R) :number {
         write_byte1(0x01, io);
         return read_half_word();
     }
 
-    //% blockId="GPIO_Read_Digital" block="|%io|读取数字值"
+    //% blockId="GPIO_Read_Digital" block="|%io|端口数字值"
     //% weight=50
     export function GPIO_Read_Digital(io: IO_DIGITAL_R) :number {
         write_byte1(0x02, io);
         return read_byte();
     }    
 
-    //% blockId="GPIO_Write_Digital" block="|%io|数字值写 d %d"
+    //% blockId="GPIO_Write_Digital" block="|%io|端口数字值写入|%d|"
     //% weight=50
     export function GPIO_Write_Digital(io: IO_DIGITAL_W, value: number) :void {
         write_byte2(0x03, 0xb0, value);
@@ -351,7 +351,7 @@ namespace LANDZO_TS {
         return read_byte();
     }
     
-    //% blockId="BlackTraker_left" block="红外寻迹左"
+    //% blockId="BlackTraker_left" block="红外寻迹1"
     //% weight=50
     export function BlackTraker_left() :number {
         write_byte0(0x52);
@@ -362,7 +362,7 @@ namespace LANDZO_TS {
         return 0;
     }
     
-    //% blockId="BlackTraker_right" block="红外寻迹右"
+    //% blockId="BlackTraker_right" block="红外寻迹2"
     //% weight=50
     export function BlackTraker_right() :number {
         write_byte0(0x52);
