@@ -1,6 +1,6 @@
 {
     "name": "LandzoTianshu",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "makecode Landzo Tianshu package for micro:bit",
     "license": "MIT",
     "dependencies": {
