@@ -33,6 +33,49 @@ namespace LANDZO_TS {
         Joystick2_y = 0x0E,
     }
     
+    export enum IO_ANALOG_R {
+        P1 = 0xb0,
+        P2 = 0xb1,
+        GP1 = 0xb2,
+        GP2 = 0xb3,
+    }
+    
+    export enum IO_DIGITAL_R {
+        P1 = 0xb0,
+        P2 = 0xb1,
+        P3 = 0xc1,
+        P4 = 0xc2,
+        P5 = 0xc3,
+        P6 = 0xc4,
+        GP1 = 0xb2,
+        GP2 = 0xb3,
+    }
+    
+    export enum IO_DIGITAL_W {
+        P1 = 0xb0,
+        P2 = 0xb1,
+        P3 = 0xc1,
+        P4 = 0xc2,
+        P5 = 0xc3,
+        P6 = 0xc4,
+    }  
+    
+    export enum COLUMN {
+        L1 = 0,
+        L2 = 1,
+        L3 = 2,
+        L4 = 3,
+        L5 = 4,
+        L6 = 5,
+        L7 = 6,
+        L8 = 7,
+    } 
+    
+    export enum POINT {
+        X = 0,
+        O = 1,
+    } 
+    
     function joy_read(cmd: number) :number {
         let buf = pins.createBuffer(1);
         buf[0] = cmd;
@@ -78,13 +121,19 @@ namespace LANDZO_TS {
         pins.i2cWriteBuffer(BASE_BOARD_I2C_ADDR, buf)
     }
     
-    
+    //% blockId="MAX7219_show_line" block="MAX7219显示行 %l %pnt1 %pnt2 %pnt3 %pnt4 %pnt5 %pnt6 %pnt7 %pnt8" icon="\uf00a"
+    //% weight=190 blockGap=8
+    export function MAX7219_show_line(line: COLUMN, pnt1: POINT,pnt2: POINT,pnt3: POINT,pnt4: POINT,pnt5: POINT,pnt6: POINT,pnt7: POINT,pnt8: POINT): void {
+        let point = pnt1<<7 + pnt2<<6 + pnt3<<5 + pnt4<<4 + pnt5<<3 + pnt6<<2 + pnt7<<1 + pnt8;
+        write_byte2(0x72, line, point);
+    }
+    /*
     //% blockId="MAX7219_show_line" block="MAX7219显示行 l %l|n %n" icon="\uf00a"
     //% weight=90 blockGap=8
     export function MAX7219_show_line(line: number, point: number): void {
         write_byte2(0x72, line, point);
     }
-    
+    */
     //% blockId="MAX7219_show" block="MAX7219显示多行 l1 %l1|l2 %l2|l3 %l3|l4 %l4|l5 %l5|l6 %l6|l7 %l7|l8 %l8" icon="\uf00a"
     //% weight=200 blockGap=8
     export function MAX7219_show(line1_dat: number, line2_dat: number, line3_dat: number, line4_dat: number, line5_dat: number, line6_dat: number, line7_dat: number, line8_dat: number): void {
@@ -127,6 +176,27 @@ namespace LANDZO_TS {
         write_byte2(0x70, num&0xff, num>>8);
     }
     
+    //% blockId="GPIO_Read_Analog" block="|%io|读取模拟值"
+    //% weight=50
+    export function GPIO_Read_Analog(io: IO_ANALOG_R) :number {
+        write_byte1(0x01, io);
+        return read_half_word();
+    }
+
+    //% blockId="GPIO_Read_Digital" block="|%io|读取数字值"
+    //% weight=50
+    export function GPIO_Read_Digital(io: IO_DIGITAL_R) :number {
+        write_byte1(0x02, io);
+        return read_byte();
+    }    
+
+    //% blockId="GPIO_Write_Digital" block="|%io|数字值写 d %d"
+    //% weight=50
+    export function GPIO_Write_Digital(io: IO_DIGITAL_W, value: number) :void {
+        write_byte2(0x03, 0xb0, value);
+    }
+    
+    /*
     //% blockId="General_IO1_Read_Analog" block="通用IO1读取模拟值"
     //% weight=50
     export function General_IO1_Read_Analog() :number {
@@ -148,7 +218,7 @@ namespace LANDZO_TS {
         return read_half_word();
     }
     
-    //% blockId="General_IO2_Read_Digital" block="通用IO12读取数字值"
+    //% blockId="General_IO2_Read_Digital" block="通用IO2读取数字值"
     //% weight=50
     export function General_IO2_Read_Digital() :number {
         write_byte1(0x02, 0xb3);
@@ -246,6 +316,9 @@ namespace LANDZO_TS {
     export function P6_Write_Digital(value: number) :void {
         write_byte2(0x03, 0xc4, value);
     }
+    */
+    
+    
     
     //% blockId="DS18B20_read" block="DS18B20读取温度"
     //% weight=50
